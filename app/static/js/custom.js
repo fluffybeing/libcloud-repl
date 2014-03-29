@@ -1,6 +1,6 @@
 
 var term, parser;
-
+var output;
 var helpPage=[
 	'%CS%+r Terminal Help %-r%n',
 	'  This is just a sample to demonstrate command line libcloud.',
@@ -215,8 +215,8 @@ function commandHandler() {
 						) + '%n';
 				}
 				this.write(s, 1); */
-				var to_execute = "print \"hello\"";
-				var output;
+				var to_execute = command;
+				getOutput(to_execute, callback)
         /*$.getJSON(document.URL + 'repl/',{code: to_execute},
                  function(data) {
 										output = data.output;
@@ -226,16 +226,8 @@ function commandHandler() {
 
         			this.write(output, 1);
         		*/
-						$.ajax({
-							type: "GET",
-							url : "/repl/",
-        			data: {"code":to_execute},
-        			contentType: "application/json; charset=utf-8",
-							success: function(result){
-								 output = result.output;
-							}
-						});
-           alert(output);
+
+
 
 				return;
 		}
@@ -243,19 +235,29 @@ function commandHandler() {
 	this.prompt();
 }
 
- function mySocketCallback() {
-    if (this.socket.succes) {
+function getOutput ( to_execute, callback ) {
+		$.ajax({
+			type: "GET",
+			url : "/repl/",
+			data: {"code":to_execute},
+			contentType: "application/json; charset=utf-8",
+			success: function(result){
+
+				callback(result);
+
+			}
+		});
+}
+
+function callback(output) {
+
+    if (output) {
        // status 200 OK
-       this.write("Server said:\n" + this.socket.responseText);
-    }
-    else if (this.socket.errno) {
-       // connection failed
-       this.write("Connection error: " + this.socket.errstring);
-    }
-    else {
+       term.write(output.output+"\nError: "+output.error);
+    }  else {
        // connection succeeded, but server returned other status than 2xx
-       this.write("Server returned: " +
-                  this.socket.status + " " + this.socket.statusText);
+       term.write("Server returned: " +  "nothing returned");
     }
-    this.prompt();
-  }
+    term.prompt();
+    return;
+}
