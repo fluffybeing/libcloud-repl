@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, jsonify, session, Markup
-#from script import exec_sandbox
+#from pypysandbox import exec_sandbox # use pypy sanbox for execution
 from pyscriptrunner import runprocess
 
 @app.route('/')
@@ -13,7 +13,7 @@ def index():
 @app.route('/repl/', methods=['GET'])
 def execute():
     code = request.args.get("code")
-    print str(code)
+    # process stdout for beautiful print
     err = "rahul"
     out = runprocess(str(code))
     print out
