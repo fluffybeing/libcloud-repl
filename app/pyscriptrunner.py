@@ -15,7 +15,7 @@ def stream_watcher(identifier, stream):
     for line in stream:
         io_q.put((identifier, line))
         result.put((identifier, line))
-        
+
     if not stream.closed:
         stream.close()
 
@@ -38,16 +38,19 @@ def runprocess(code):
     Thread(target=stream_watcher, name='stderr-watcher',
        	   args=('STDERR', proc.stderr)).start()
 
-    Thread(target=printer, name='printer').start()
+    #Thread(target=printer, name='printer').start()
     # for killing the process but not necessary for now
     #atexit.register(proc.kill)
     f.close()
+    '''
     while True:
 	try:
 	    stdout_list.append(result.get(True, 1))
 	except Empty:
 	    break
     return stdout_list
+    '''
+    return result
 
 
 def printer():
@@ -67,15 +70,15 @@ def printer():
         else:
             identifier, line = item
 	    #print identifier + ':', line
-	
+
     #print stdout_list
 
 '''
 if __name__ == '__main__':
-    code = 
+    code =
 print "hello"
 print 1+2
 M
-    
+
     print runprocess(code)
 '''

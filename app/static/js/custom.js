@@ -206,16 +206,10 @@ function commandHandler() {
 				// for test purpose just output argv as list
 				// assemble a string of style-escaped lines and output it in more-mode
 				var command = this.argv.join(' ');
-				/* s=' INDEX  QL  ARGUMENT%n';
-				for (var i=0; i<this.argv.length; i++) {
-					s += this.globals.stringReplace('%', '%%',
-							this.globals.fillLeft(i, 6) +
-							this.globals.fillLeft((this.argQL[i])? this.argQL[i]:'-', 4) +
-							'  "' + this.argv[i] + '"'
-						) + '%n';
-				}
-				this.write(s, 1); */
+
+				//this.write(s, 1); */
 				var to_execute = command;
+
 				getOutput(to_execute, callback)
         /*$.getJSON(document.URL + 'repl/',{code: to_execute},
                  function(data) {
@@ -240,7 +234,7 @@ function getOutput ( to_execute, callback ) {
 			type: "GET",
 			url : "/repl/",
 			data: {"code":to_execute},
-			contentType: "application/json; charset=utf-8",
+			contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			success: function(result){
 
 				callback(result);
@@ -253,7 +247,7 @@ function callback(output) {
 
     if (output) {
        // status 200 OK
-       term.write(output.output+"\nError: "+output.error);
+       term.write(output.output+output.error);
     }  else {
        // connection succeeded, but server returned other status than 2xx
        term.write("Server returned: " +  "nothing returned");
