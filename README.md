@@ -14,6 +14,7 @@ libcloud cli is built on python-flask. To setup development environment
 follow the instruction.
 
 Use a virtualenv::
+
     $ pip install virtualenv
     $ mkvirtualenv datagrepper      # set path in your ~/.bashrc
     $ workon datagrepper
