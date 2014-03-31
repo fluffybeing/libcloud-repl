@@ -31,6 +31,7 @@ As your normal old user self, run the development server::
 In a browser, visit http://localhost:5000 to see the docs.
 
 You can quick test that your shell is running by typing some simple commands::
+
      >>> print "Hi I am Libcloud user"
 
 
