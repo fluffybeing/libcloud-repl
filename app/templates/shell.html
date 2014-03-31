@@ -1,0 +1,142 @@
+<html>
+<head>
+	<meta content="Web based terminal">
+	<title>Libcloud Terminal Dummy</title>
+
+	<style type="text/css" src="static/css/custom.css"> </style>
+
+	<script language="JavaScript" type="text/javascript" src="static/assets/termlib/termlib.js"></script>
+	<script language="JavaScript" type="text/javascript" src="static/assets/termlib/termlib_parser.js"></script>
+ 	<script language="JavaScript" type="text/javascript" src="static/assets/jquery/jquery-1.11.0.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="static/js/custom.js"></script>
+<style type="text/css">
+
+.term {
+	font-family: courier,fixed,swiss,sans-serif;
+	font-size: 12px;
+	color: #33d011;
+	background: none;
+}
+.termReverse {
+	color: #111111;
+	background: #33d011;
+}
+
+body,p,a,td {
+	font-family: courier,fixed,swiss,sans-serif;
+	font-size: 12px;
+	color: #cccccc;
+}
+.lh15 {
+	line-height: 15px;
+}
+a,a:link,a:visited {
+	text-decoration: none;
+	color: #77dd11;
+}
+a:hover {
+	text-decoration: underline;
+	color: #77dd11;
+}
+a:active {
+	text-decoration: underline;
+	color: #dddddd;
+}
+
+a.termopen,a.termopen:link,a.termopen:visited {
+	text-decoration: none;
+	color: #77dd11;
+	background: none;
+}
+a.termopen:hover {
+	text-decoration: none;
+	color: #222222;
+	background: #77dd11;
+}
+a.termopen:active {
+	text-decoration: none;
+	color: #222222;
+	background: #dddddd;
+}
+
+table.inventory td {
+	padding-bottom: 20px !important;
+}
+
+pre,tt {
+	font-family: courier,fixed,monospace;
+	color: #ccffaa;
+	font-size: 12px;
+	line-height: 15px;
+}
+.pale { color: #cceebb !important; }
+
+li {
+	line-height: 15px;
+	margin-bottom: 8px !important;
+}
+
+.dimmed,.dimmed *,.dimmed * * {
+	background-color: #222222 !important;
+	color: #333333 !important;
+}
+
+@media print {
+	body { background-color: #ffffff; }
+	body,p,a,td,li,tt {
+		color: #000000;
+	}
+	pre,.prop,.pale {
+		color: #000000;
+	}
+	h1 {
+		color: #000000;
+	}
+	a,a:link,a:visited {
+		color: #000000;
+	}
+	a:hover {
+		color: #000000;
+	}
+	a:active {
+		color: #000000;
+	}
+	table.inventory {
+		display: none;
+	}
+}
+
+</style>
+</head>
+
+
+<body bgcolor="#222222" link="#77dd11" text="#cccccc" alink="#dddddd" vlink="#77dd11"
+topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" marginheight="0" marginwidth="0">
+
+
+<table border="0" cellspacing="20" cellpadding="0" width="100%">
+	<tr valign="top">
+	<td nowrap>
+		<table border="0" cellspacing="0" cellpadding="0" width="190" class="inventory">
+
+		<tr><td nowrap>
+			<a href="javascript:termOpen()" onfocus="if(this.blur)this.blur();" onmouseover="window.status='open terminal'; return true" onmouseout="window.status=''; return true" class="termopen">&gt; open terminal &nbsp;</a>
+		</td></tr>
+		<tr><td nowrap>
+			&nbsp;
+		</td></tr>
+		</table>
+	</td>
+
+<td>
+	<table border="0" cellspacing="0" cellpadding="0" width="190" class="inventory">
+	<tr><td>&nbsp;</td></tr>
+	</table>
+</td>
+</tr>
+</table>
+
+<div id="termDiv" style="position:absolute; visibility: hidden; z-index:1;"></div>
+
+</body>
+</html>

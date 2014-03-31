@@ -1,0 +1,4 @@
+docker-py==0.3.0
+Flask==0.10.1
+requests==2.2.1
+psutil

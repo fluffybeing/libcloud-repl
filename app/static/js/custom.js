@@ -32,7 +32,10 @@ function termOpen() {
 				ps: '>>>',
 				initHandler: termInitHandler,
 				handler: commandHandler,
-				exitHandler: termExitHandler
+				exitHandler: termExitHandler,
+				crsrBlinkMode: true,
+				crsrBlockMode: false,
+				printTab: true
 			}
 		);
 		if (term) term.open();
@@ -81,7 +84,13 @@ function termInitHandler() {
 }
 
 function commandHandler() {
+
 	this.newLine();
+	var argv = [''];     // arguments vector
+	var argQL = ['', '"'];    // quoting level
+	var argc = 0;        // arguments cursor
+	var escape = true ; // escape flag
+	var command = '';
 	// check for raw mode first (should not be parsed)
 	if (this.rawMode) {
 		if (this.env.getPassword) {
@@ -103,6 +112,12 @@ function commandHandler() {
 		return;
 	}
 
+	for (var i=0; i<this.lineBuffer.length; i++) {
+		var ch= this.lineBuffer.charAt(i);
+		command += ch;
+	}
+	if (command.length > 0)
+		this.ps = '....';
 	parser.parseLine(this);
 	if (this.argv.length == 0) {
 		// no commmand line input
@@ -205,23 +220,10 @@ function commandHandler() {
 			default:
 				// for test purpose just output argv as list
 				// assemble a string of style-escaped lines and output it in more-mode
-				var command = this.argv.join(' ');
 
-				//this.write(s, 1); */
 				var to_execute = command;
 
 				getOutput(to_execute, callback)
-        /*$.getJSON(document.URL + 'repl/',{code: to_execute},
-                 function(data) {
-										output = data.output;
-										//output = output.replace(new RegExp("\\n","g"), '<br/>');
-										//alert(output+data.error);
-                 });
-
-        			this.write(output, 1);
-        		*/
-
-
 
 				return;
 		}
