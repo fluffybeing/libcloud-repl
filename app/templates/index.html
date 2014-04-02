@@ -62,6 +62,71 @@
             font-size: 90px;
       }
     </style>
+    <style type="text/css">
+
+.term {
+  font-family: courier,fixed,swiss,sans-serif;
+  font-size: 12px;
+  color: #33d011;
+  background: none;
+}
+.termReverse {
+  color: #111111;
+  background: #33d011;
+}
+
+.lh15 {
+  line-height: 15px;
+}
+
+table.inventory td {
+  padding-bottom: 20px !important;
+}
+
+pre,tt {
+  font-family: courier,fixed,monospace;
+  color: #ccffaa;
+  font-size: 12px;
+  line-height: 15px;
+}
+.pale { color: #cceebb !important; }
+
+li {
+  line-height: 15px;
+  margin-bottom: 8px !important;
+}
+
+.dimmed,.dimmed *,.dimmed * * {
+  background-color: #222222 !important;
+  color: #333333 !important;
+}
+
+@media print {
+  body { background-color: #ffffff; }
+  body,p,a,td,li,tt {
+    color: #000000;
+  }
+  pre,.prop,.pale {
+    color: #000000;
+  }
+  h1 {
+    color: #000000;
+  }
+  a,a:link,a:visited {
+    color: #000000;
+  }
+  a:hover {
+    color: #000000;
+  }
+  a:active {
+    color: #000000;
+  }
+  table.inventory {
+    display: none;
+  }
+}
+
+</style>
     <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -77,9 +142,12 @@
     <link rel="apple-touch-icon-precomposed" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
     -->
     <script src="static/assets/jquery/jquery-1.11.0.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="static/assets/termlib/termlib.js"></script>
+    <script language="JavaScript" type="text/javascript" src="static/assets/termlib/termlib_parser.js"></script>
+    <script language="JavaScript" type="text/javascript" src="static/js/custom.js"></script>
   </head>
 
-  <body>
+  <body onload='termOpen();'>
 
     <div class="container-narrow">
 
@@ -112,7 +180,7 @@
 
       <div class="row-fluid marketing">
         <div class="span12">
-          <!--{{ docs }} -->
+          <div id="termDiv" style=" visibility: hidden; z-index:1;"></div>
         </div>
       </div>
 
