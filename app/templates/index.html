@@ -125,7 +125,17 @@ li {
     display: none;
   }
 }
-
+#editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 710px;
+        height:484px;
+        margin: auto;
+        margin-top: 608px;
+    }
 </style>
     <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -147,7 +157,7 @@ li {
     <script language="JavaScript" type="text/javascript" src="static/js/custom.js"></script>
   </head>
 
-  <body onload='termOpen();'>
+  <body>
 
     <div class="container-narrow">
 
@@ -179,16 +189,59 @@ li {
       {% endif %}
 
       <div class="row-fluid marketing">
-        <div class="span12">
-          <div id="termDiv" style=" visibility: hidden; z-index:1;"></div>
+        <div class="span12" style="height:408px;">
+          <a href="javascript:termOpen()" onclick="termDescHide();" onfocus="if(this.blur)this.blur();" onmouseover="window.status='open terminal'; return true" onmouseout="window.status=''; return true" class="termopen" style="font-size:70px; text-align:center;">&gt; open terminal</a>
+          <p><a href="javascript:testMultiLine(true)" onfocus="if(this.blur)this.blur();" class="termopen" style="float:right;">Code Editor</a></p>
+          <div id="termDesc" style="width:700px; height: 408px; margin-top:20px;">
+            <p>  Apache Libcloud - Terminal</p>
+            <p>Libcloud REPL is Python shell for standard web-browsers, written
+            in Python, <br/> JavaScript, CSS and HTML5. It comprises of shell, Python REPL, <br/>
+            and brings its own dummy implemetation of Apache libcloud package.
+           </p>
+           <p>
+            For an overview of implemented commands have a look at the<BR>
+            complete <A HREF="man.txt" onfocus="if(this.blur)this.blur();" TARGET="docs">&gt; libcloud-REPL-Reference</A>;
+           <p>
+            The keyboard accepts the US-ASCII character set.</p>
+           <p>As key-mapping depends from your browser, you may have to use
+            the cursor <br/> and backspace buttons at the lower right of the
+            terminal. A complete keyboard can be <br/>accessed at the lower left.</p>
+           <br/>
+           <p>  Compatibility: Netscape 4+, MS IE 4+ and DOM-aware browsers.<p>
+           <br/>
+            Libcloud REPL is a free Flask Web App under Apache 2.0 LICENSE<br/><br/>
+            <br/>
+          </div>
+          <div id="termDiv" style=" visibility: hidden; z-index:2; margin-top:-388px; height:500px; "></div>
         </div>
+
       </div>
 
-      <hr>
+      <!--Prompt Box for code-->
+      <div id="promptDiv" style=" font-family:monospace; width:700px; height:200px; margin-top: -388px; left: 340px; z-index:2; visibility: hidden;">
+          <table border="0" cellspacing="8" cellpadding="2">
 
-      <div class="footer">
-      </div>
-
+            <form id="promptForm">
+              <tr>
+                <td><div><div id="editor"></div></div></td>
+              </tr>
+              <tr>
+                <td align="right">
+                 <input type="button" style="padding:5px; margin:-10px 10px 0px; width:90px;" class="btn btn-danger" value="Cancel" onclick="promptHandler(null, false); this.form.content.value='';">
+                 <input type="button" style="padding:5px; margin:10px 10px 0px; width:90px;" class="btn btn-success" value="Import" onclick="promptHandler(editor.getValue()); this.form.content.value='';">
+                </td>
+              </tr>
+            </form>
+          </table>
+      </div> <!-- Prompt box END-->
+      <br/><br/><br/>
     </div> <!-- /container -->
-</body></html>
+</body>
+<script src="static/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/python");
+</script>
+</html>
 {# vim: set ts=2 sw=2 sta et syn=htmldjango: #}
