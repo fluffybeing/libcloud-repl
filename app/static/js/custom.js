@@ -7,7 +7,7 @@ var helpPage=[
 	'  Use one of the following commands:',
 	'     clear [-a] .......... clear the terminal',
 	'                           option "a" also removes the status line',
-	'     number -n<value> .... return value of option "n" (test for options)',
+	'     python .............. start a dummy python Shell',
 	'     repeat -n<value> .... repeats the first argument n times (another test)',
 	'     dump ................ lists all arguments and alphabetic options',
 	'     login <username> .... sample login (test for raw mode)',
@@ -25,7 +25,7 @@ var EXECUTE = 2;
 var MULTIPLE_LINES = 1;
 var SINGLE_LINE = 0;
 function termOpen() {
-	if (!term || term.losed) {
+	if (!term || term.closed) {
 		term=new Terminal(
 			{
 				x: 20,
@@ -42,9 +42,11 @@ function termOpen() {
 				crsrBlinkMode: true,
 				crsrBlockMode: false,
 				printTab: true,
-				frameWidth: 5,
+				frameWidth: 2,
 				bgColor: '#000000',
-        frameColor:'#0066ff'
+        frameColor:'#0088cc',
+        textBlur: 0,
+				textColor: '#ffffff'
 			}
 		);
 		if (term) term.open();
@@ -72,6 +74,7 @@ function termExitHandler() {
 	var mainPane = (document.getElementById)?
 		document.getElementById('mainPane') : document.all.mainPane;
 	if (mainPane) mainPane.className = 'lh15';
+
 }
 
 function termInitHandler() {
@@ -91,7 +94,7 @@ function termInitHandler() {
 		]
 	);
 
-	this.statusLine('', 8,2);
+	this.statusLine('', 1, 2);
 	this.statusLine(' +++ This is just a dummy libcloud interface. Type "help" for help. +++');
 	this.maxLines -= 2;
 
@@ -170,6 +173,8 @@ function commandHandler() {
 					break;
 				case 'exit':
 					this.close();
+					termDescShow();
+					break;
 				case 'python':
 					this.write(['Python 2.7.5 (default, Feb 19 2014, 13:47:28)',
 					 					'[GCC 4.8.2 20131212 (Red Hat 4.8.2-7)] on linux2'
@@ -218,9 +223,16 @@ function commandHandler() {
 		if (to_execute.length == 0)
 				this.prompt();
 		if (send == EXECUTE) {
-			getOutput(to_execute, callback);
-			to_execute = '';
-			this.ps = '>>>';
+			if (command == 'exit') {
+				cmd_type = 'terminal';
+				this.ps = 'libcloud~$';
+				this.prompt();
+			} else {
+				getOutput(to_execute, callback);
+				to_execute = '';
+				this.ps = '>>>';
+			}
+
 		}
 
 	}
@@ -252,4 +264,50 @@ function callback(output) {
     }
     term.prompt();
     return;
+}
+
+function termDescHide() {
+	$('#termDesc').css('visibility', 'hidden');
+	return true;
+}
+
+function termDescShow() {
+	$('#termDesc').css('visibility', 'visible');
+	return true;
+}
+
+var useMultiLineImport=false;
+
+function testMultiLine(funcFlag) {
+	if ((!term) || (term.closed)) {
+		alert('Please open a terminal first!');
+		return;
+	}
+	// set flag for handler
+	// if true, we'll use importMultiLineText(), else importEachLine()
+	useMultiLineImport=funcFlag;
+
+	// set global keylock (else no key stroke will reach the form element)
+	TermGlobals.keylock = true;
+
+	// and show the multiline prompt
+	TermGlobals.setVisible('promptDiv', true);
+	document.forms.promptForm.content.focus();
+	// input will by handled by promptHandler
+}
+
+function promptHandler(text) {
+	// hide the dialog
+	TermGlobals.setVisible('promptDiv', false);
+
+	// reset keylock and import the text
+	TermGlobals.keylock = false;
+	if (text) {
+		if (useMultiLineImport) {
+			TermGlobals.importMultiLine(text);
+		}
+		else {
+			TermGlobals.importEachLine(text);
+		}
+	}
 }

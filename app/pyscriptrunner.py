@@ -10,6 +10,8 @@ import atexit
 # Queue to keep track of stdout
 io_q = Queue()
 result = Queue()
+
+
 def stream_watcher(identifier, stream):
 
     for line in stream:
