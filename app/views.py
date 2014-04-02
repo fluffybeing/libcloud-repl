@@ -26,23 +26,28 @@ def shell():
 @app.route('/repl', methods=['GET'])
 def execute():
     code = request.args.get("code")
+
+    out = err = result = ''
     # process stdout for beautiful print
     statement = code.replace('\r\n', '\n')
-    statement += '\n\n'
 
-    result = runprocess(statement)
+    if (statement):
+        #print len(statement)
+        result = runprocess(statement)
 
-    out = err = ''
-    while True:
-        try:
-            std = result.get(True, 1)
-            if std[0] == 'STDOUT':
-                out += std[1]
-            else:
-                err += std[1]
-        except Empty:
-            break
-    #print out
+    try:
+        while True:
+            try:
+                std = result.get(True, 1)
+                if std[0] == 'STDOUT':
+                    out += std[1]
+                else:
+                    err += std[1]
+            except Empty:
+                break
+        #print out
+    except:
+        print "Empty Statement"
 
     return jsonify(success=1, output=out, error=err)
 
