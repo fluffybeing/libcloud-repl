@@ -3,8 +3,8 @@
 # Based on Ubuntu
 ############################################################
 
-FROM      ubuntu
-MAINTAINER Rahul Ranjan "contact@rranjan.net"
+FROM ubuntu:12.04
+MAINTAINER Rahul Ranjan "rahul.rrixe@gmail.com"
 
 RUN echo 'deb http://archive.ubuntu.com/ubuntu quantal main universe multiverse' > /etc/apt/sources.list
 # RUN echo 'deb http://archive.ubuntu.com/ubuntu main universe multiverse' > /etc/apt/sources.list
